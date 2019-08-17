@@ -52,9 +52,9 @@ ex) 59초 --> 60%59=1 --> mainString의 index 1의 문자로 8번을 붙여 key 
 
 **■ DBMS 를사용하지 않는대신.....**
 
-page, request, session, application 와 같은 영역 객체를 이용합니다.
+저장소 역할은 영역 객체 중 하나인 application을 이용합니다.
 
-그 중 application에 ArrayList타입으로 저장을 합니다.
+application에 ArrayList타입으로 저장을 합니다.
 
 ArrayList<HashMap()> --> HashMap 키 oriUrl, subUrl, subKey
 
@@ -63,6 +63,10 @@ oriUrl : 본 URL
 subUrl : 가공된 URL
 
 subKey : 채번된 Key
+
+**■ 사용자 화면**
+
+![front](./images/front.png)
 
 
 

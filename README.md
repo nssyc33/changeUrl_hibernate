@@ -40,12 +40,31 @@ public String getOriUrl(String searchKey, ArrayList list) : 대체 URL 호출 �
 
 **■ 키 생성원리**
 
-현재 시스템 시간의 초를 입력받는다.
+현재 시스템 시간의 초를 입력받습니다.
 
 String mainString = "1234567890AaBbCcDdEeFfGghHiIjJkKLlmMNnOopPqQRrSsTtuUvVWwXxyY";에서
 
-현재 시간을 60으로 나누어 나머지를 mainString의 인덱스에 행하는 문자를 나타낸다.
+현재 시간을 60으로 나누어 나머지를 mainString의 인덱스에 행하는 문자를 나타냅니다.
 
 ex) 59초 --> 60%59=1 --> mainString의 index 1의 문자로 8번을 붙여 key 생성 --> "22222222"
 
-해당하는 key가 존재할 경우 뒷자리 부터 순차적으로 문자열을 올린다.
+해당하는 key가 존재할 경우 뒷자리 부터 순차적으로 문자열을 올립니다.
+
+**■ DBMS 를사용하지 않는대신.....**
+
+page, request, session, application 와 같은 영역 객체를 이용합니다.
+
+그 중 application에 ArrayList타입으로 저장을 합니다.
+
+ArrayList<HashMap()> --> HashMap 키 oriUrl, subUrl, subKey
+
+oriUrl : 본 URL
+
+subUrl : 가공된 URL
+
+subKey : 채번된 Key
+
+
+
+
+

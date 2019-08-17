@@ -37,3 +37,15 @@ private String makeShortUrl_step1(int nowSec) : key 생성시 기준 key 생성�
 private String makeshortUrlName_step2(String asIsKey) : key 생성시 존재하는 key이면 다른 key 생성하는 함수
 
 public String getOriUrl(String searchKey, ArrayList list) : 대체 URL 호출 시 실제 URL 호출하는 함수
+
+**■ 키 생성원리**
+
+현재 시스템 시간의 초를 입력받는다.
+
+String mainString = "1234567890AaBbCcDdEeFfGghHiIjJkKLlmMNnOopPqQRrSsTtuUvVWwXxyY";에서
+
+현재 시간을 60으로 나누어 나머지를 mainString의 인덱스에 행하는 문자를 나타낸다.
+
+ex) 59초 --> 60%59=1 --> mainString의 index 1의 문자로 8번을 붙여 key 생성 --> "22222222"
+
+해당하는 key가 존재할 경우 뒷자리 부터 순차적으로 문자열을 올린다.

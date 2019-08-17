@@ -10,3 +10,7 @@
 java version : 1.5
 
 spring version 3.2.3.RELEASE
+
+
+## 소스
+프로젝트명 : exSubUrl

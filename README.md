@@ -18,3 +18,22 @@ spring version 3.2.3.RELEASE
 ![structure](./images/structure.png)
 
 
+**■ MakeShortUrlController**
+
+@RequestMapping("/exSubUrl/view.do") : URL 조회 및 입력 핸들러
+
+@RequestMapping("/exSubUrl/insertData.do") : URL 입력 핸드러
+
+@RequestMapping("/{subName}") : 대체된 URL 매핑 핸들러
+
+**■ MakeShortUrlName**
+
+public boolean duplicateExistsYn(HashMap asMap, ArrayList list) : 존재하는 URL인지 판단하는 함수
+
+public String makeShortUrl(ArrayList list , int nowSec) : key 생성하는 함수
+
+private String makeShortUrl_step1(int nowSec) : key 생성시 기준 key 생성하는 함수
+
+private String makeshortUrlName_step2(String asIsKey) : key 생성시 존재하는 key이면 다른 key 생성하는 함수
+
+public String getOriUrl(String searchKey, ArrayList list) : 대체 URL 호출 시 실제 URL 호출하는 함수

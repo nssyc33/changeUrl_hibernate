@@ -36,7 +36,7 @@ public class TestController {
 	@RequestMapping("/exSubUrl/view.do")
 	public String view(Model md, HttpServletRequest req) throws Exception{
 		System.out.println("test open");
-		ArrayList<UrlData> list = msun.listContact();
+		ArrayList<UrlData> list = msun.listUrlData();
 		md.addAttribute("list", list);
 		return "insertlist";
 	}

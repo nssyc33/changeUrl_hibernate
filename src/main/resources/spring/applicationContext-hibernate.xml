@@ -57,7 +57,7 @@
         </property>
         <property name="mappingResources">
             <list>
-                <value>/sql/hibernate/mapper/contact.xml</value>
+                <value>/sql/hibernate/mapper/urlData.xml</value>
             </list>
         </property>
     </bean>
@@ -68,7 +68,7 @@
 
     <tx:annotation-driven transaction-manager="transactionManager" />
 
-    <bean id="contactDAO" class="testGitHub.io.Service.ContactDAOImpl">
+    <bean id="urlDataDAO" class="testGitHub.io.Service.UrlDataDAOImpl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 

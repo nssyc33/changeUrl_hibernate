@@ -13,7 +13,7 @@ import org.springframework.util.SystemPropertyUtils;
 public class MakeShortUrlName {
 	
 	@Autowired
-    private ContactDAO contactDAO;
+    private UrlDataDAO urlDataDAO;
 	
 	private static final String mainString = "1234567890AaBbCcDdEeFfGghHiIjJkKLlmMNnOopPqQRrSsTtuUvVWwXxyY";
 
@@ -166,9 +166,9 @@ public class MakeShortUrlName {
 		return "";
 	}
 	
-	public ArrayList<UrlData> listContact(){
+	public ArrayList<UrlData> listUrlData(){
 		try{
-			ArrayList<UrlData> asList = (ArrayList<UrlData>) contactDAO.listContact();
+			ArrayList<UrlData> asList = (ArrayList<UrlData>) urlDataDAO.listUrlData();
 			System.out.println("list 크기입니다. : "+asList.size());
 			return asList;
 		}catch(Exception e){
@@ -185,7 +185,7 @@ public class MakeShortUrlName {
 			ud.setOriUrl((String)asMap.get("oriUrl"));
 			ud.setSubUrl((String)asMap.get("subUrl"));
 			ud.setSubKey((String)asMap.get("subKey"));
-			contactDAO.addContact(ud);
+			urlDataDAO.addUrlData(ud);
 		}catch(Exception e){
 			System.out.println("에러가 발생했습니다.");
 			System.out.println("error message : "+e.getMessage());

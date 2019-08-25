@@ -19,7 +19,7 @@ import testGitHub.io.Service.MakeShortUrlName;
 import testGitHub.io.Service.UrlData;
 
 @Controller
-public class TestController {
+public class UrlController {
 
 	@Autowired
 	MakeShortUrlName msun;

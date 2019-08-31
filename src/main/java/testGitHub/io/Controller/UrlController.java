@@ -37,6 +37,12 @@ public class UrlController {
 	public String view(Model md, HttpServletRequest req) throws Exception{
 		System.out.println("test open");
 		ArrayList<UrlData> list = msun.listUrlData();
+		
+		for(UrlData as:list){
+			System.out.println("오리지날 url 확인 : "+as.getOriUrl());
+		}
+		
+		
 		md.addAttribute("list", list);
 		return "insertlist";
 	}

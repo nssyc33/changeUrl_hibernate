@@ -3,18 +3,19 @@ package testGitHub.io.Service;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tb_url")
+@SequenceGenerator(name="URL_SEQ_GENERATOR", sequenceName = "URL_SEQ", initialValue=1, allocationSize=1)
 public class UrlData {
 
 	@Id
-    @Column(name = "IDS")
-    @GeneratedValue
-    private int ids;
-
+    @Column(name = "ID")
+    private String id;
 
     @Column(name = "ORI_URL")
     private String oriUrl;
@@ -28,13 +29,13 @@ public class UrlData {
     private String subKey;
 
 
-	public int getIds() {
-		return ids;
+	public String getId() {
+		return id;
 	}
 
 
-	public void setIds(int ids) {
-		this.ids = ids;
+	public void setId(String id) {
+		this.id = id;
 	}
 
 

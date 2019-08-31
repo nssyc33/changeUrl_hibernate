@@ -181,7 +181,7 @@ public class MakeShortUrlName {
 	public void saveData(HashMap asMap){
 		try{
 			UrlData ud = new UrlData();
-			ud.setIds(1);
+			ud.setId((String)asMap.get("subKey"));
 			ud.setOriUrl((String)asMap.get("oriUrl"));
 			ud.setSubUrl((String)asMap.get("subUrl"));
 			ud.setSubKey((String)asMap.get("subKey"));

@@ -13,12 +13,6 @@
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
     
-    <!-- <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <property name="basename" value="classpath:messages/message" />
-        <property name="defaultEncoding" value="UTF-8" />
-    </bean> -->
-
-
     <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
         <property name="paramName" value="lang" />
     </bean>
@@ -53,6 +47,7 @@
             <props>
                 <prop key="hibernate.dialect">${jdbc.dialect}</prop>
                 <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.id.new_generator_mappings">true</prop>
             </props>
         </property>
         <property name="mappingResources">
@@ -60,6 +55,7 @@
                 <value>/sql/hibernate/mapper/urlData.xml</value>
             </list>
         </property>
+        
     </bean>
 
     <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">

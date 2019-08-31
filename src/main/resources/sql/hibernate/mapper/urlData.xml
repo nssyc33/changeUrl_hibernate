@@ -3,10 +3,9 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
     <class name="testGitHub.io.Service.UrlData" table="tb_url">
-        <id name="ids" type="int">
-            <column name="IDS" />
-            <generator class="sequence" />
-        </id>
+        <id name="id" type="string">
+            <column name="ID" not-null="true" />
+        </id> 
         <property name="oriUrl" type="string">
             <column name="ORI_URL" length="30" not-null="false" />
         </property>

@@ -1,6 +1,5 @@
 package testGitHub.io.Controller;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -16,68 +15,28 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import testGitHub.io.Service.MakeShortUrlName;
-import testGitHub.io.Service.UrlData;
 
 @Controller
 public class UrlController {
 
 	@Autowired
-	MakeShortUrlName msun;
+	MakeShortUrlName makeShortUrlName;
 	
 	@Autowired
     ServletContext context;
 	
-	/**
-	 * @param md
-	 * @param req
-	 * @return
-	 * @throws Exception
-	 */
 	@RequestMapping("/exSubUrl/view.do")
-	public String view(Model md, HttpServletRequest req) throws Exception{
-		System.out.println("test open");
-		ArrayList<UrlData> list = msun.listUrlData();
-		
-		for(UrlData as:list){
-			System.out.println("오리지날 url 확인 : "+as.getOriUrl());
-		}
-		
-		
-		md.addAttribute("list", list);
+	public String view(Model md, HttpServletRequest req) throws Exception{		
+		md.addAttribute("list", makeShortUrlName.getUrlData());
 		return "insertlist";
 	}
 	
-	/**
-	 * @param hm
-	 * @param req
-	 * @param ra
-	 * @return
-	 * @throws Exception
-	 */
 	@RequestMapping("/exSubUrl/insertData.do")
-	public String insertData(@RequestParam HashMap hm, HttpServletRequest req, RedirectAttributes ra) throws Exception{
-		System.out.println("test insert");
-		ArrayList list = (ArrayList) context.getAttribute("urlData");
-		if(list == null){
-			list = new ArrayList();
-		}
-		if(!msun.duplicateExistsYn(hm, list)){
-			HashMap hma = new HashMap();
-			String nowTime = new SimpleDateFormat("ss").format(System.currentTimeMillis());
-			int nowSec = Integer.parseInt(nowTime);
-			String asKey = msun.makeShortUrl(list, nowSec);
-			hma.put("oriUrl", hm.get("oriUrl"));
-			hma.put("subUrl", "http://localhost:"+req.getServerPort()+"/"+asKey);
-			hma.put("subKey", asKey);
-			list.add(hma);
-			
-			msun.saveData(hma);
-			
-			ra.addAttribute("dupYn", "N");
-		}else{
-			ra.addAttribute("dupYn", "Y");
-		}
-//		context.setAttribute("urlData", list);
+	public String insertUrl(@RequestParam HashMap hm, 
+			                 HttpServletRequest req, 
+			                 RedirectAttributes ra) throws Exception{
+		hm.put("port", req.getServerPort());
+		makeShortUrlName.saveUrl(hm);
 		return "redirect:/exSubUrl/view.do";
 	}	
 	
@@ -87,14 +46,43 @@ public class UrlController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/{subName}")
-	public String subName(@PathVariable String subName, HttpServletRequest req) throws Exception{
+	@RequestMapping("/{keys:.+}")
+	public String callRealUrl(@PathVariable String keys,  HttpServletRequest req) throws Exception{
+		System.out.println("값을 확인 합니다. : "+keys);
 		if(context.getAttribute("urlData") == null){
 			return "";
 		}else{
 			ArrayList list = (ArrayList) context.getAttribute("urlData");
-			String asOriUrl = msun.getOriUrl(subName, list);
-			return "redirect:http://"+asOriUrl;
+//			String asOriUrl = makeShortUrlName.getOriUrl(subName, list);
+//			return "redirect:http://"+asOriUrl;
+			return "";
 		}
 	}	
+	
+//	@RequestMapping("/exSubUrl/insertData.do")
+//	public String insertData(@RequestParam HashMap hm, 
+//			                 HttpServletRequest req, 
+//			                 RedirectAttributes ra) throws Exception{
+//		ArrayList list = (ArrayList) context.getAttribute("urlData");
+//		if(list == null){
+//			list = new ArrayList();
+//		}
+//		if(!makeShortUrlName.duplicateExistsYn(hm, list)){
+//			HashMap hma = new HashMap();
+//			String nowTime = new SimpleDateFormat("ss").format(System.currentTimeMillis());
+//			int nowSec = Integer.parseInt(nowTime);
+//			String asKey = makeShortUrlName.makeShortUrl(list, nowSec);
+//			hma.put("oriUrl", hm.get("oriUrl"));
+//			hma.put("subUrl", "http://localhost:"+req.getServerPort()+"/"+asKey);
+//			hma.put("subKey", asKey);
+//			list.add(hma);
+//			
+//			makeShortUrlName.saveData(hma);
+//			
+//			ra.addAttribute("dupYn", "N");
+//		}else{
+//			ra.addAttribute("dupYn", "Y");
+//		}
+//		return "redirect:/exSubUrl/view.do";
+//	}	
 }

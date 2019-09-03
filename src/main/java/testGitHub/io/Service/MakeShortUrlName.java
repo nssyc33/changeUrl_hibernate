@@ -1,5 +1,6 @@
 package testGitHub.io.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -17,44 +18,24 @@ public class MakeShortUrlName {
 	
 	private static final String mainString = "1234567890AaBbCcDdEeFfGghHiIjJkKLlmMNnOopPqQRrSsTtuUvVWwXxyY";
 
-	public boolean duplicateExistsYn(HashMap asMap, ArrayList list){
-		String url = (String) asMap.get("oriUrl");
-		String asUrl = "";
-		for(int i=0;i<list.size();i++){
-			asUrl = (String)((HashMap)list.get(i)).get("oriUrl");
-			if(asUrl.equals(url)){
-				return true;
-			}
-		}
-		return false;
+	public int duplicateCheckStandardKey(String standardKey){
+		int count = urlDataDAO.getExistsUrlCount(standardKey);
+		return count;
 	}
 	
-	public String makeShortUrl(ArrayList list , int nowSec){
-		String standKey = makeShortUrl_step1(nowSec);
-		String asKey = "";
-		String result = "";
-		int check = 0;
+	public String makeShortUrl(){
+		String standardKey = makeShortUrlStandardFrame();
+		if(duplicateCheckStandardKey(standardKey) > 0){
+			return nextIndexStandardKey(standardKey);
+		}else{
+			return standardKey;
+		}
+	}
+	
+	private String makeShortUrlStandardFrame(){
+		String nowTime = new SimpleDateFormat("ss").format(System.currentTimeMillis());
+		int nowSec = Integer.parseInt(nowTime);
 		
-		while(check == 0){
-			check = 1;
-			for(int i=0;i<list.size();i++){
-				asKey = (String)((HashMap)list.get(i)).get("subKey");
-				if(asKey.equals(standKey)){
-					check = 0;
-					break;
-				}
-			}
-			if(check == 0){
-				standKey = makeshortUrlName_step2(standKey);
-			}else{
-				result = standKey;
-				break;
-			}
-		}
-		return result;
-	}
-	
-	private String makeShortUrl_step1(int nowSec){
 		if(nowSec == 0){
 			nowSec = 1;
 		}
@@ -66,7 +47,7 @@ public class MakeShortUrlName {
 		return result;
 	}
 	
-	private String makeshortUrlName_step2(String stnKey){
+	private String nextIndexStandardKey(String stnKey){
 		StringBuilder changeVar = new StringBuilder(stnKey);
 		if(stnKey.indexOf("Y")> -1){
 			if(stnKey.substring(7,8).equals("Y")){
@@ -166,7 +147,7 @@ public class MakeShortUrlName {
 		return "";
 	}
 	
-	public ArrayList<UrlData> listUrlData(){
+	public ArrayList<UrlData> getUrlData(){
 		try{
 			ArrayList<UrlData> asList = (ArrayList<UrlData>) urlDataDAO.listUrlData();
 			System.out.println("list 크기입니다. : "+asList.size());
@@ -178,16 +159,16 @@ public class MakeShortUrlName {
 		}
 	}
 	
-	public void saveData(HashMap asMap){
+	public void saveUrl(HashMap asMap){
 		try{
 			UrlData ud = new UrlData();
-			ud.setId((String)asMap.get("subKey"));
+			String newKey = this.makeShortUrl();
+			ud.setId(newKey);
 			ud.setOriUrl((String)asMap.get("oriUrl"));
-			ud.setSubUrl((String)asMap.get("subUrl"));
-			ud.setSubKey((String)asMap.get("subKey"));
-			urlDataDAO.addUrlData(ud);
+			ud.setSubUrl("http://localhost:"+(String)asMap.get("port")+"/"+newKey);
+			ud.setSubKey(newKey);
+			urlDataDAO.addUrl(ud);
 		}catch(Exception e){
-			System.out.println("에러가 발생했습니다.");
 			System.out.println("error message : "+e.getMessage());
 		}
 	}

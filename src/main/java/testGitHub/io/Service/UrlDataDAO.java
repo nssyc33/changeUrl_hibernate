@@ -11,4 +11,6 @@ public interface UrlDataDAO {
     public void removeUrlData(int id);
     
     public int getExistsUrlCount(String standardKey);
+    
+    public String getOriUrl(String standardKey);
 }

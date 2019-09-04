@@ -1,5 +1,7 @@
 package testGitHub.io.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -34,8 +36,15 @@ public class UrlDataDAOImpl implements UrlDataDAO {
     }
     
     public int getExistsUrlCount(String standardKey) {
-    	Query q = this.sessionFactory.getCurrentSession().createQuery("from UrlData where 1 = 1 and subKey = "+standardKey);
+    	Query q = this.sessionFactory.getCurrentSession().createQuery("from UrlData where 1 = 1 and subKey = '"+standardKey+"'");
         System.out.println("갯수  : "+q.list().size());
         return q.list().size();
+    }
+    
+    public String getOriUrl(String standardKey) {
+    	Query q = this.sessionFactory.getCurrentSession().createQuery("from UrlData where 1 = 1 and subKey = '"+standardKey+"'");
+        ArrayList resultList = (ArrayList) q.list();
+        UrlData urlData = (UrlData)resultList.get(0);
+        return urlData.getOriUrl();
     }
 }

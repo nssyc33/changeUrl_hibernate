@@ -40,49 +40,9 @@ public class UrlController {
 		return "redirect:/exSubUrl/view.do";
 	}	
 	
-	/**
-	 * @param subName
-	 * @param req
-	 * @return
-	 * @throws Exception
-	 */
 	@RequestMapping("/{keys:.+}")
 	public String callRealUrl(@PathVariable String keys,  HttpServletRequest req) throws Exception{
-		System.out.println("값을 확인 합니다. : "+keys);
-		if(context.getAttribute("urlData") == null){
-			return "";
-		}else{
-			ArrayList list = (ArrayList) context.getAttribute("urlData");
-//			String asOriUrl = makeShortUrlName.getOriUrl(subName, list);
-//			return "redirect:http://"+asOriUrl;
-			return "";
-		}
+		String asOriUrl = makeShortUrlName.getOriUrl(keys);
+		return "redirect:http://"+asOriUrl;
 	}	
-	
-//	@RequestMapping("/exSubUrl/insertData.do")
-//	public String insertData(@RequestParam HashMap hm, 
-//			                 HttpServletRequest req, 
-//			                 RedirectAttributes ra) throws Exception{
-//		ArrayList list = (ArrayList) context.getAttribute("urlData");
-//		if(list == null){
-//			list = new ArrayList();
-//		}
-//		if(!makeShortUrlName.duplicateExistsYn(hm, list)){
-//			HashMap hma = new HashMap();
-//			String nowTime = new SimpleDateFormat("ss").format(System.currentTimeMillis());
-//			int nowSec = Integer.parseInt(nowTime);
-//			String asKey = makeShortUrlName.makeShortUrl(list, nowSec);
-//			hma.put("oriUrl", hm.get("oriUrl"));
-//			hma.put("subUrl", "http://localhost:"+req.getServerPort()+"/"+asKey);
-//			hma.put("subKey", asKey);
-//			list.add(hma);
-//			
-//			makeShortUrlName.saveData(hma);
-//			
-//			ra.addAttribute("dupYn", "N");
-//		}else{
-//			ra.addAttribute("dupYn", "Y");
-//		}
-//		return "redirect:/exSubUrl/view.do";
-//	}	
 }

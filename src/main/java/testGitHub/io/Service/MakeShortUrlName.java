@@ -136,40 +136,35 @@ public class MakeShortUrlName {
 		return changeVar;
 	}
 	
-	public String getOriUrl(String searchKey, ArrayList list){
-		String subKey = "";
-		for(int i=0;i<list.size();i++){
-			subKey = (String)((HashMap)list.get(i)).get("subKey");
-			if(searchKey.equals(subKey)){
-				return (String)((HashMap)list.get(i)).get("oriUrl");
-			}
-		}
-		return "";
+	public String getOriUrl(String standardKey){
+		String subKey = urlDataDAO.getOriUrl(standardKey);
+		return subKey;
 	}
 	
-	public ArrayList<UrlData> getUrlData(){
+	public ArrayList<UrlData> getUrlData() throws Exception{
 		try{
 			ArrayList<UrlData> asList = (ArrayList<UrlData>) urlDataDAO.listUrlData();
 			System.out.println("list 크기입니다. : "+asList.size());
 			return asList;
 		}catch(Exception e){
-			System.out.println("에러가 발생했습니다.");
-			System.out.println("error message : "+e.getMessage());
-			return new ArrayList<UrlData>();
+			throw new Exception("조회 도중 에러가 발생하였습니다.");
 		}
 	}
 	
-	public void saveUrl(HashMap asMap){
+	public void saveUrl(HashMap asMap) throws Exception{
 		try{
 			UrlData ud = new UrlData();
+			System.out.println("저장 first");
 			String newKey = this.makeShortUrl();
+			System.out.println("저장 middle");
 			ud.setId(newKey);
 			ud.setOriUrl((String)asMap.get("oriUrl"));
-			ud.setSubUrl("http://localhost:"+(String)asMap.get("port")+"/"+newKey);
+			ud.setSubUrl("http://localhost:"+(Integer)asMap.get("port")+"/"+newKey);
 			ud.setSubKey(newKey);
+			System.out.println("저장 call");
 			urlDataDAO.addUrl(ud);
 		}catch(Exception e){
-			System.out.println("error message : "+e.getMessage());
+			throw new Exception("저장 도중 에러가 발생하였습니다.");
 		}
 	}
 }

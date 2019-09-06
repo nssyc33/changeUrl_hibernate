@@ -32,75 +32,54 @@ public class MakeShortUrlName {
 		}
 	}
 	
-	private String makeShortUrlStandardFrame(){
-		String nowTime = new SimpleDateFormat("ss").format(System.currentTimeMillis());
-		int nowSec = Integer.parseInt(nowTime);
-		
-		if(nowSec == 0){
-			nowSec = 1;
-		}
-		int start = 60%nowSec;
+	public String makeShortUrlStandardFrame(){
 		String result = "";
-		for(int i=0;i<8;i++){
-			result += mainString.substring(start, start+1);
+		int startIndex = Integer.parseInt(new SimpleDateFormat("ss").format(System.currentTimeMillis()));
+		if(startIndex == 0){
+			startIndex = 1;
 		}
+		
+		for(int i=0;i<8;i++){
+			result += mainString.substring(startIndex, startIndex+1);
+		}
+		
 		return result;
 	}
 	
-	private String nextIndexStandardKey(String stnKey){
-		StringBuilder changeVar = new StringBuilder(stnKey);
+	public String nextIndexStandardKey(String stnKey){
+		StringBuilder stnKeyBuilder = new StringBuilder(stnKey);
 		if(stnKey.indexOf("Y")> -1){
 			if(stnKey.substring(7,8).equals("Y")){
 				if("YYYYYYYY".equals(stnKey)){
-					changeVar = new StringBuilder("11111111");
+					stnKeyBuilder = new StringBuilder("11111111");
 				}else{
-					int po = 10;
-					if(stnKey.substring(0,8).lastIndexOf("Y") > -1){
-						int yIndex = stnKey.substring(0,8).lastIndexOf("Y");
-						for(int i=7;i>-1;i--){
-							if(!"Y".equals(stnKey.substring(i,i+1)) && yIndex!= i){
-								po = i;
-								break;
-							}
-						}
-					}
-					String stdVar = stnKey.substring(0,7).substring(po, po+1);
-					int position = mainString.indexOf(stdVar);
-					char as = mainString.charAt(position+1);
-					for(int j=po; j<8; j++){
-						if(j == po){
-							changeVar.setCharAt(j, as);
-						}else{
-							changeVar.setCharAt(j, '1');
-						}
-					}
+					stnKeyBuilder = makeStringBuilder(8, stnKeyBuilder, stnKey);
 				}
 			}else if(stnKey.substring(6,7).equals("Y")){
-				changeVar = makeStringBuilder(6, changeVar, stnKey);
+				stnKeyBuilder = makeStringBuilder(7, stnKeyBuilder, stnKey);
 			}else if(stnKey.substring(5,6).equals("Y")){
-				changeVar = makeStringBuilder(5, changeVar, stnKey);
+				stnKeyBuilder = makeStringBuilder(6, stnKeyBuilder, stnKey);
 			}else if(stnKey.substring(4,5).equals("Y")){
-				changeVar = makeStringBuilder(4, changeVar, stnKey);
+				stnKeyBuilder = makeStringBuilder(5, stnKeyBuilder, stnKey);
 			}else if(stnKey.substring(3,4).equals("Y")){
-				changeVar = makeStringBuilder(3, changeVar, stnKey);
+				stnKeyBuilder = makeStringBuilder(4, stnKeyBuilder, stnKey);
 			}else if(stnKey.substring(2,3).equals("Y")){
-				changeVar = makeStringBuilder(2, changeVar, stnKey);
+				stnKeyBuilder = makeStringBuilder(3, stnKeyBuilder, stnKey);
 			}else if(stnKey.substring(1,2).equals("Y")){
-				changeVar = makeStringBuilder(1, changeVar, stnKey);
+				stnKeyBuilder = makeStringBuilder(2, stnKeyBuilder, stnKey);
 			}else if(stnKey.substring(0,1).equals("Y")){
-				changeVar = new StringBuilder("11111111");
+				stnKeyBuilder = new StringBuilder("11111111");
 			}
 		}else{
 			String stdVar = stnKey.substring(7,8);
 			int position = mainString.indexOf(stdVar);
 			char as = mainString.charAt(position+1);
-			changeVar.setCharAt(7, as);
+			stnKeyBuilder.setCharAt(7, as);
 		}
-		return changeVar.toString();
+		return stnKeyBuilder.toString();
 	}
 	
-	private StringBuilder makeStringBuilder(int index, StringBuilder changeVar, String stnKey){
-		String pointVar = stnKey.substring(index,index+1);
+	private StringBuilder makeStringBuilder(int index, StringBuilder stnKeyBuilder, String stnKey){
 		int po = 10;
 		if(stnKey.substring(0,index+1).lastIndexOf("Y") > -1){
 			int yIndex = stnKey.substring(0,index).lastIndexOf("Y");
@@ -115,9 +94,9 @@ public class MakeShortUrlName {
 			char as = mainString.charAt(position+1);
 			for(int j=po; j<8; j++){
 				if(j == po){
-					changeVar.setCharAt(j, as);
+					stnKeyBuilder.setCharAt(j, as);
 				}else{
-					changeVar.setCharAt(j, '1');
+					stnKeyBuilder.setCharAt(j, '1');
 				}
 			}
 		}else{	
@@ -127,44 +106,34 @@ public class MakeShortUrlName {
 			char as = mainString.charAt(position+1);
 			for(int j=po; j<8; j++){
 				if(j == po){
-					changeVar.setCharAt(j, as);
+					stnKeyBuilder.setCharAt(j, as);
 				}else{
-					changeVar.setCharAt(j, '1');
+					stnKeyBuilder.setCharAt(j, '1');
 				}
 			}
 		}
-		return changeVar;
-	}
-	
-	public String getOriUrl(String standardKey){
-		String subKey = urlDataDAO.getOriUrl(standardKey);
-		return subKey;
+		return stnKeyBuilder;
 	}
 	
 	public ArrayList<UrlData> getUrlData() throws Exception{
-		try{
-			ArrayList<UrlData> asList = (ArrayList<UrlData>) urlDataDAO.listUrlData();
-			System.out.println("list 크기입니다. : "+asList.size());
-			return asList;
-		}catch(Exception e){
-			throw new Exception("조회 도중 에러가 발생하였습니다.");
-		}
+		return (ArrayList<UrlData>) urlDataDAO.listUrlData();
 	}
 	
 	public void saveUrl(HashMap asMap) throws Exception{
 		try{
 			UrlData ud = new UrlData();
-			System.out.println("저장 first");
 			String newKey = this.makeShortUrl();
-			System.out.println("저장 middle");
 			ud.setId(newKey);
 			ud.setOriUrl((String)asMap.get("oriUrl"));
 			ud.setSubUrl("http://localhost:"+(Integer)asMap.get("port")+"/"+newKey);
 			ud.setSubKey(newKey);
-			System.out.println("저장 call");
 			urlDataDAO.addUrl(ud);
 		}catch(Exception e){
 			throw new Exception("저장 도중 에러가 발생하였습니다.");
 		}
+	}
+	
+	public String getOriUrl(String standardKey){
+		return urlDataDAO.getOriUrl(standardKey);
 	}
 }

@@ -46,74 +46,26 @@ public class MakeShortUrlName {
 		return result;
 	}
 	
-	public String nextIndexStandardKey(String stnKey){
-		StringBuilder stnKeyBuilder = new StringBuilder(stnKey);
-		if(stnKey.indexOf("Y")> -1){
-			if(stnKey.substring(7,8).equals("Y")){
-				if("YYYYYYYY".equals(stnKey)){
-					stnKeyBuilder = new StringBuilder("11111111");
-				}else{
-					stnKeyBuilder = makeStringBuilder(8, stnKeyBuilder, stnKey);
-				}
-			}else if(stnKey.substring(6,7).equals("Y")){
-				stnKeyBuilder = makeStringBuilder(7, stnKeyBuilder, stnKey);
-			}else if(stnKey.substring(5,6).equals("Y")){
-				stnKeyBuilder = makeStringBuilder(6, stnKeyBuilder, stnKey);
-			}else if(stnKey.substring(4,5).equals("Y")){
-				stnKeyBuilder = makeStringBuilder(5, stnKeyBuilder, stnKey);
-			}else if(stnKey.substring(3,4).equals("Y")){
-				stnKeyBuilder = makeStringBuilder(4, stnKeyBuilder, stnKey);
-			}else if(stnKey.substring(2,3).equals("Y")){
-				stnKeyBuilder = makeStringBuilder(3, stnKeyBuilder, stnKey);
-			}else if(stnKey.substring(1,2).equals("Y")){
-				stnKeyBuilder = makeStringBuilder(2, stnKeyBuilder, stnKey);
-			}else if(stnKey.substring(0,1).equals("Y")){
-				stnKeyBuilder = new StringBuilder("11111111");
+	public String nextIndexStandardKey(String standardKey){
+		StringBuffer stnKeyBuffer = new StringBuffer(standardKey);
+		StringBuffer mainStringBuilder = new StringBuffer(mainString);
+		int findNotMIndex = -1;
+		String subsIndexString = "";
+		for(int i = stnKeyBuffer.length()-1; i > -1; i--){
+			subsIndexString = String.valueOf(stnKeyBuffer.charAt(i));
+			if(!subsIndexString.equals("Y")){
+				findNotMIndex = i;
+				break;
 			}
-		}else{
-			String stdVar = stnKey.substring(7,8);
-			int position = mainString.indexOf(stdVar);
-			char as = mainString.charAt(position+1);
-			stnKeyBuilder.setCharAt(7, as);
 		}
-		return stnKeyBuilder.toString();
+		if(findNotMIndex == -1){
+			stnKeyBuffer = new StringBuffer("11111111"); 
+		}else{
+			stnKeyBuffer.setCharAt(findNotMIndex, mainString.charAt(mainStringBuilder.indexOf(subsIndexString)+1));
+		}
+		return stnKeyBuffer.toString();
 	}
 	
-	private StringBuilder makeStringBuilder(int index, StringBuilder stnKeyBuilder, String stnKey){
-		int po = 10;
-		if(stnKey.substring(0,index+1).lastIndexOf("Y") > -1){
-			int yIndex = stnKey.substring(0,index).lastIndexOf("Y");
-			for(int i=index-1;i>-1;i--){
-				if(!"Y".equals(stnKey.substring(i,i+1)) && yIndex!= i){
-					po = i;
-					break;
-				}
-			}
-			String stdVar = stnKey.substring(0,index).substring(po, po+1);
-			int position = mainString.indexOf(stdVar);
-			char as = mainString.charAt(position+1);
-			for(int j=po; j<8; j++){
-				if(j == po){
-					stnKeyBuilder.setCharAt(j, as);
-				}else{
-					stnKeyBuilder.setCharAt(j, '1');
-				}
-			}
-		}else{	
-			po = index-1;
-			String stdVar = stnKey.substring(0,index).substring(po, po+1);
-			int position = mainString.indexOf(stdVar);
-			char as = mainString.charAt(position+1);
-			for(int j=po; j<8; j++){
-				if(j == po){
-					stnKeyBuilder.setCharAt(j, as);
-				}else{
-					stnKeyBuilder.setCharAt(j, '1');
-				}
-			}
-		}
-		return stnKeyBuilder;
-	}
 	
 	public ArrayList<UrlData> getUrlData() throws Exception{
 		return (ArrayList<UrlData>) urlDataDAO.listUrlData();

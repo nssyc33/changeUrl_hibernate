@@ -11,7 +11,10 @@ public class NextIndexStandardKeyTest {
 	@Test
 	public void test() {
 		MakeShortUrlName makeShortUrlName = new MakeShortUrlName();
-		assertEquals("11111111", makeShortUrlName.nextIndexStandardKey("YYYYYYYY"));       
+		assertEquals("YYYYYYY2", makeShortUrlName.nextIndexStandardKey("YYYYYYY1")); 
+		assertEquals("1YYYYYY2", makeShortUrlName.nextIndexStandardKey("1YYYYYY1"));
+		assertEquals("12345YYY", makeShortUrlName.nextIndexStandardKey("12344YYY"));
+		assertEquals("12Y43YYY", makeShortUrlName.nextIndexStandardKey("12Y42YYY"));
 	}
 
 }

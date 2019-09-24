@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="testGitHub.io.Service.UrlData" table="tb_url">
+    <class name="testGitHub.io.Entity.UrlData" table="tb_url">
         <id name="id" type="string">
             <column name="ID" not-null="true" />
         </id> 

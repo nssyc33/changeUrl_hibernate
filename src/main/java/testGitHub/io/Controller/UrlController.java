@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import testGitHub.io.Service.GetUrlName;
 import testGitHub.io.Service.MakeShortUrlName;
 
 @Controller
@@ -22,11 +23,14 @@ public class UrlController {
 	MakeShortUrlName makeShortUrlName;
 	
 	@Autowired
+	GetUrlName getUrlName;
+	
+	@Autowired
     ServletContext context;
 	
 	@RequestMapping("/exSubUrl/view.do")
 	public String view(Model md, HttpServletRequest req) throws Exception{		
-		md.addAttribute("list", makeShortUrlName.getUrlData());
+		md.addAttribute("list", getUrlName.getUrlData());
 		return "insertlist";
 	}
 	
@@ -41,7 +45,9 @@ public class UrlController {
 	
 	@RequestMapping("/{keys:.+}")
 	public String callRealUrl(@PathVariable String keys,  HttpServletRequest req) throws Exception{
-		String asOriUrl = makeShortUrlName.getOriUrl(keys);
+		System.out.println("testt : ");
+		String asOriUrl = getUrlName.getOriginUrl(keys);
+		System.out.println("testtest : "+asOriUrl);
 		return "redirect:http://"+asOriUrl;
 	}	
 }

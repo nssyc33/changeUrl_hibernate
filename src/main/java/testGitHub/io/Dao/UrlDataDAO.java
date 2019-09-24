@@ -1,6 +1,8 @@
-package testGitHub.io.Service;
+package testGitHub.io.Dao;
 
 import java.util.List;
+
+import testGitHub.io.Entity.UrlData;
 
 public interface UrlDataDAO {
 	

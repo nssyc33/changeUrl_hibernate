@@ -1,13 +1,14 @@
 package testGitHub.io.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.SystemPropertyUtils;
+
+import testGitHub.io.Dao.UrlDataDAO;
+import testGitHub.io.Entity.UrlData;
 
 @Transactional
 @Service
@@ -18,14 +19,17 @@ public class MakeShortUrlName {
 	
 	private static final String mainString = "1234567890AaBbCcDdEeFfGghHiIjJkKLlmMNnOopPqQRrSsTtuUvVWwXxyY";
 
-	public int duplicateCheckStandardKey(String standardKey){
-		int count = urlDataDAO.getExistsUrlCount(standardKey);
-		return count;
+	public boolean dupCheckStandardKey(String standardKey){
+		if(urlDataDAO.getExistsUrlCount(standardKey)>0){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
-	public String makeShortUrl(){
+	public String makeOtherExpUrl(){
 		String standardKey = makeShortUrlStandardFrame();
-		if(duplicateCheckStandardKey(standardKey) > 0){
+		if(dupCheckStandardKey(standardKey)){
 			return nextIndexStandardKey(standardKey);
 		}else{
 			return standardKey;
@@ -66,15 +70,10 @@ public class MakeShortUrlName {
 		return stnKeyBuffer.toString();
 	}
 	
-	
-	public ArrayList<UrlData> getUrlData() throws Exception{
-		return (ArrayList<UrlData>) urlDataDAO.listUrlData();
-	}
-	
 	public void saveUrl(HashMap asMap) throws Exception{
 		try{
 			UrlData ud = new UrlData();
-			String newKey = this.makeShortUrl();
+			String newKey = this.makeOtherExpUrl();
 			ud.setId(newKey);
 			ud.setOriUrl((String)asMap.get("oriUrl"));
 			ud.setSubUrl("http://localhost:"+(Integer)asMap.get("port")+"/"+newKey);
@@ -83,9 +82,5 @@ public class MakeShortUrlName {
 		}catch(Exception e){
 			throw new Exception("저장 도중 에러가 발생하였습니다.");
 		}
-	}
-	
-	public String getOriUrl(String standardKey){
-		return urlDataDAO.getOriUrl(standardKey);
 	}
 }

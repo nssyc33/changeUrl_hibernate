@@ -1,42 +1,31 @@
 package testGitHub.io.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import testGitHub.io.Dao.UrlDataDAO;
 import testGitHub.io.Entity.UrlData;
 
-@Transactional
-@Service
-public class MakeShortUrlName {
-	
+public class Save {
+
 	@Autowired
     private UrlDataDAO urlDataDAO;
 	
 	private static final String mainString = "1234567890AaBbCcDdEeFfGghHiIjJkKLlmMNnOopPqQRrSsTtuUvVWwXxyY";
 
-	public boolean dupCheckStandardKey(String standardKey){
-		if(urlDataDAO.getExistsUrlCount(standardKey)>0){
-			return true;
-		}else{
-			return false;
-		}
-	}
+	
 	
 	public String makeOtherExpUrl(){
 		int startIndex = Integer.parseInt(new SimpleDateFormat("ss").format(System.currentTimeMillis()));
 		String standardKey = makeShortUrlStandardFrame(startIndex);
 		System.out.println(standardKey);
-		if(dupCheckStandardKey(standardKey)){
+		//if(dupCheckStandardKey(standardKey)){
 			return nextIndexStandardKey(standardKey);
-		}else{
-			return standardKey;
-		}
+		//}else{
+		//	return standardKey;
+		//}
 	}
 	
 	public String makeShortUrlStandardFrame(int startIndex){

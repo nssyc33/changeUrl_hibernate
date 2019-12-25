@@ -19,6 +19,24 @@ function fn_save(){
 	var form = document.insertForm;
     form.submit();
 }
+
+function fn_downloadtest(){
+	var form = document.createElement("form");
+	form.action = "/exSubUrl/downloadtest_real.do";
+	var inputFirst = document.createElement("input");
+	var inputSecond = document.createElement("input");
+	inputFirst.setAttribute("type","hidden");
+	inputFirst.setAttribute("name","inputFirst");
+	inputFirst.setAttribute("value","inputFirstValue");
+	
+	inputSecond.setAttribute("type","hidden");
+	inputSecond.setAttribute("name","inputSecond");
+	inputSecond.setAttribute("value","inputSecondValue");
+	form.appendChild(inputFirst);
+	form.appendChild(inputSecond);
+	document.body.appendChild(form);
+	form.submit();
+}
 </script>
 <body onload="javascript:fn_init();">
 <div class="jb-responsive-table">
@@ -28,6 +46,7 @@ function fn_save(){
 			<div style="width:50%;">
 	            <input type="text" id="oriUrl" name="oriUrl" style="width: 315px;"/>
 	            <input type="button" value="저장" onclick="fn_save()"/>
+	            <input type="button" value="다운로드 테스트" onclick="fn_downloadtest()"/>
 	        </div>
         </table>
 	</form>

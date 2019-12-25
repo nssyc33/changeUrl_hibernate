@@ -1,9 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
 	   xmlns:context="http://www.springframework.org/schema/context"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	                       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
 	                       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
     
     <context:component-scan base-package="testGitHub.io.Service"/>
-
+    
+    <bean id="aopBefore" class="testGitHub.io.Aop.SampleBeforeAop"></bean>
+	<bean id="aopAfter" class="testGitHub.io.Aop.SampleAfterAop"></bean>
+	<aop:config>
+		<aop:pointcut expression="execution(* testGitHub.io.Service.*.*(..))" id="callPointCut" />
+		<aop:advisor advice-ref="aopBefore" pointcut-ref="callPointCut"/>
+		<aop:advisor advice-ref="aopAfter" pointcut-ref="callPointCut"/>
+	</aop:config>
+    
+    
+    <!-- <bean id="aop1" class="testGitHub.io.Aop.SampleAop"></bean>
+	<aop:config>
+		<aop:pointcut expression="execution(* testGitHub.io.Service.*.*(..))" id="callPointCut" />
+		<aop:aspect ref="aop1">
+			<aop:before pointcut-ref="callPointCut" method="CheckLog_before"/>
+			<aop:after  pointcut-ref="callPointCut" method="CheckLog_"/>
+			<aop:after-returning pointcut-ref="callPointCut" method="CheckLog"/>
+			<aop:after-throwing pointcut-ref="callPointCut" method="CheckLog"/>
+		</aop:aspect>
+	</aop:config> -->
+    
 </beans>

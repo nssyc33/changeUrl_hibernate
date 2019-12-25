@@ -29,7 +29,7 @@ public class UrlController {
     ServletContext context;
 	
 	@RequestMapping("/exSubUrl/view.do")
-	public String view(Model md, HttpServletRequest req) throws Exception{		
+	public String view(Model md) throws Exception{		
 		md.addAttribute("list", getUrlName.getUrlData());
 		return "insertlist";
 	}
@@ -45,9 +45,7 @@ public class UrlController {
 	
 	@RequestMapping("/{keys:.+}")
 	public String callRealUrl(@PathVariable String keys,  HttpServletRequest req) throws Exception{
-		System.out.println("testt : ");
 		String asOriUrl = getUrlName.getOriginUrl(keys);
-		System.out.println("testtest : "+asOriUrl);
 		return "redirect:http://"+asOriUrl;
-	}	
+	}
 }

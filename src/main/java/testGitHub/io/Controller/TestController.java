@@ -54,7 +54,6 @@ public class TestController {
 		Tika tika = new Tika();
 		String mediaType = tika.detect(file);
 		System.out.println("mediaType : " + mediaType);
-		
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename="+resource.getFilename())
 				.header(HttpHeaders.CONTENT_TYPE, mediaType)

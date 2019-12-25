@@ -21,10 +21,9 @@ import testGitHub.io.Entity.TestVo;
 public class TestController {
 
 	@Autowired
-	ResourceLoader resourceloader;
+	private ResourceLoader resourceloader;
 	
-	TestVo testVO;
-	
+	private TestVo testVO;
 	
 	@ModelAttribute
 	private TestVo test(TestVo vo){

@@ -40,15 +40,15 @@ public class TestController {
 		Resource resource = resourceloader.getResource("classpath:"+"/image/ch.jpg");
 		File file = resource.getFile();
 		
-		System.out.println(vo.getInputFirst());
-		System.out.println(vo.getInputSecond());
-		System.out.println(testVO.getInputFirst());
-		System.out.println(testVO.getInputSecond());
-		
-		System.out.println((String)modelMap.get("inputFirst"));
-		System.out.println((String)modelMap.get("inputSecond"));
-		System.out.println((String)asMap.get("inputFirst"));
-		System.out.println((String)asMap.get("inputSecond"));
+//		System.out.println(vo.getInputFirst());
+//		System.out.println(vo.getInputSecond());
+//		System.out.println(testVO.getInputFirst());
+//		System.out.println(testVO.getInputSecond());
+//		
+//		System.out.println((String)modelMap.get("inputFirst"));
+//		System.out.println((String)modelMap.get("inputSecond"));
+//		System.out.println((String)asMap.get("inputFirst"));
+//		System.out.println((String)asMap.get("inputSecond"));
 		
 		/*apache tika core*/
 		Tika tika = new Tika();

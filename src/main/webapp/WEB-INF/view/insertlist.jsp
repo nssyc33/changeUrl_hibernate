@@ -6,11 +6,11 @@
 </head>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
-function fn_init(){
+$(function(){
 	if($("#dupYn").val() == "Y"){
 		alert("이미 입력된 URL 입니다.");
 	}
-}
+})
 function fn_save(){
 	if($("#oriUrl").val() == ""){
 		alert("url을 입력해주시기 바랍니다.");
@@ -19,7 +19,24 @@ function fn_save(){
 	var form = document.insertForm;
     form.submit();
 }
-
+function fn_ajax(){
+	$.ajax({
+		url:"/exSubUrl/getData",
+		type:"GET", 
+ 		contentType:"application/json;charset=utf-8",
+		dataType:"json",
+		error:function(xhr,status, msg){
+			alert(xhr+" : "+status+" : "+msg);
+		},	
+		success:function(data){
+			console.log(data);
+			alert(data.result);
+		}
+	});
+}
+function test(){
+	alert("done");
+}
 function fn_downloadtest(){
 	var form = document.createElement("form");
 	form.action = "/exSubUrl/downloadtest_real.do";
@@ -38,15 +55,18 @@ function fn_downloadtest(){
 	form.submit();
 }
 </script>
-<body onload="javascript:fn_init();">
+<body>
 <div class="jb-responsive-table">
     <form action="/exSubUrl/insertData.do" method="post" name="insertForm">
         <input type="hidden" id="dupYn" name="dupYn" value='${dupYn}'/>
 		<table>
 			<div style="width:50%;">
-	            <input type="text" id="oriUrl" name="oriUrl" style="width: 315px;"/>
-	            <input type="button" value="저장" onclick="fn_save()"/>
-	            <input type="button" value="다운로드 테스트" onclick="fn_downloadtest()"/>
+				<tr>
+					<td><input type="text" id="oriUrl" name="oriUrl" style="width: 315px;"/></td>
+					<td><input type="button" value="save" onclick="fn_save()"/></td>
+					<td><input type="button" value="download test" onclick="fn_downloadtest()"/></td>
+					<td><input type="button" value="ajax test" onclick="fn_ajax()"/></td>
+				</tr>
 	        </div>
         </table>
 	</form>

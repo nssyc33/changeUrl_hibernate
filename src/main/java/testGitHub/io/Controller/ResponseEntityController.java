@@ -1,7 +1,6 @@
 package testGitHub.io.Controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 
 import org.apache.tika.Tika;
@@ -18,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import testGitHub.io.Entity.TestVo;
 
 @Controller
-public class TestController {
+public class ResponseEntityController {
 
 	@Autowired
 	private ResourceLoader resourceloader;
@@ -39,15 +38,14 @@ public class TestController {
 		Resource resource = resourceloader.getResource("classpath:"+"/image/ch.jpg");
 		File file = resource.getFile();
 		
+		System.out.println(asMap.get("inputFirst"));
+		System.out.println(asMap.get("inputSecond"));
+		System.out.println(modelMap.get("inputFirst"));
+		System.out.println(modelMap.get("inputSecond"));
 		System.out.println(vo.getInputFirst());
 		System.out.println(vo.getInputSecond());
 		System.out.println(testVO.getInputFirst());
 		System.out.println(testVO.getInputSecond());
-		
-		System.out.println((String)modelMap.get("inputFirst"));
-		System.out.println((String)modelMap.get("inputSecond"));
-		System.out.println((String)asMap.get("inputFirst"));
-		System.out.println((String)asMap.get("inputSecond"));
 		
 		/*apache tika core*/
 		Tika tika = new Tika();

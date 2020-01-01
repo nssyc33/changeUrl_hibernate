@@ -6,6 +6,7 @@
 </head>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
+var test;
 $(function(){
 	if($("#dupYn").val() == "Y"){
 		alert("이미 입력된 URL 입니다.");
@@ -20,6 +21,13 @@ function fn_save(){
     form.submit();
 }
 function fn_ajax(){
+	console.log("a");
+	console.log("a");
+	test = "test1";
+	console.log("a");
+	console.log("a");
+	console.log("a");
+	test = "test2";
 	$.ajax({
 		url:"/exSubUrl/getData",
 		type:"GET", 
@@ -31,12 +39,29 @@ function fn_ajax(){
 		success:function(data){
 			console.log(data);
 			alert(data.result);
+			test = "test1";
 		}
 	});
 }
 function test(){
 	alert("done");
 }
+
+function fn_XmlMarshalling(){
+	$.ajax({
+		url:"/exSubUrl/getDatatoXml",
+		type:"GET", 
+ 		contentType:"application/xml;charset=utf-8",
+		dataType:"xml",
+		error:function(xhr,status, msg){
+			alert(msg);
+		},	
+		success:function(data){
+			alert("success done");
+		}
+	});
+}
+
 function fn_downloadtest(){
 	var form = document.createElement("form");
 	form.action = "/exSubUrl/downloadtest_real.do";
@@ -63,9 +88,10 @@ function fn_downloadtest(){
 			<div style="width:50%;">
 				<tr>
 					<td><input type="text" id="oriUrl" name="oriUrl" style="width: 315px;"/></td>
-					<td><input type="button" value="save" onclick="fn_save()"/></td>
-					<td><input type="button" value="download test" onclick="fn_downloadtest()"/></td>
-					<td><input type="button" value="ajax test" onclick="fn_ajax()"/></td>
+					<td><input type="button" value="Save" onclick="fn_save()"/></td>
+					<td><input type="button" value="Download test" onclick="fn_downloadtest()"/></td>
+					<td><input type="button" value="Ajax test" onclick="fn_ajax()"/></td>
+					<td><input type="button" value="Xml Marshalling Test" onclick="fn_XmlMarshalling()"/></td>
 				</tr>
 	        </div>
         </table>

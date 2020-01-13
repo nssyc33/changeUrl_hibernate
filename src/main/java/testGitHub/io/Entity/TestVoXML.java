@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-@XmlRootElement(name = "testts")
+@XmlRootElement(name = "tests")
 public class TestVoXML {
 
 	private String status;

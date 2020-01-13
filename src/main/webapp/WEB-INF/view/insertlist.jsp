@@ -21,13 +21,6 @@ function fn_save(){
     form.submit();
 }
 function fn_ajax(){
-	console.log("a");
-	console.log("a");
-	test = "test1";
-	console.log("a");
-	console.log("a");
-	console.log("a");
-	test = "test2";
 	$.ajax({
 		url:"/exSubUrl/getData",
 		type:"GET", 
@@ -39,7 +32,6 @@ function fn_ajax(){
 		success:function(data){
 			console.log(data);
 			alert(data.result);
-			test = "test1";
 		}
 	});
 }

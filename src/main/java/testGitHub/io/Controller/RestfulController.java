@@ -23,7 +23,7 @@ public class RestfulController {
 	
 	@RequestMapping(value="/exSubUrl/getData", method=RequestMethod.GET)
 	@ResponseBody
-	public Map getData(){
+	public Map getData(String testString){
 		Map result = new HashMap();
 		result.put("result", "Y");
 		TestVo vo = new TestVo();

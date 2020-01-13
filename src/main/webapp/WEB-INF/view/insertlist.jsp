@@ -26,6 +26,9 @@ function fn_ajax(){
 		type:"GET", 
  		contentType:"application/json;charset=utf-8",
 		dataType:"json",
+		data:{
+			sendData:"sendValue"
+		},
 		error:function(xhr,status, msg){
 			alert(xhr+" : "+status+" : "+msg);
 		},	

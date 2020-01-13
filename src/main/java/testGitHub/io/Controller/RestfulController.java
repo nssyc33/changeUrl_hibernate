@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
@@ -23,12 +24,13 @@ public class RestfulController {
 	
 	@RequestMapping(value="/exSubUrl/getData", method=RequestMethod.GET)
 	@ResponseBody
-	public Map getData(String testString){
+	public Map getData(@RequestParam String sendData){
+		System.out.println("데이터 확인 : "+ sendData);
 		Map result = new HashMap();
-		result.put("result", "Y");
 		TestVo vo = new TestVo();
 		vo.setInputFirst("dataFirst");
 		vo.setInputSecond("dataSecond");
+		result.put("result", "Y");
 		result.put("data", vo);
 		return result;	
 	}

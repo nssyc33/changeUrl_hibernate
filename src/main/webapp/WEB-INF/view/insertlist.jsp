@@ -42,7 +42,7 @@ function test(){
 	alert("done");
 }
 
-function fn_XmlMarshalling(){
+function fn_xmlMarshalling(){
 	$.ajax({
 		url:"/exSubUrl/getDatatoXml",
 		type:"GET", 
@@ -74,6 +74,24 @@ function fn_downloadtest(){
 	document.body.appendChild(form);
 	form.submit();
 }
+
+function fn_redirectAttribute(){
+	var form = document.createElement("form");
+	form.action = "/exSubUrl/callRedirectTest.do";
+	var inputFirst = document.createElement("input");
+	var inputSecond = document.createElement("input");
+	inputFirst.setAttribute("type","hidden");
+	inputFirst.setAttribute("name","inputFirst");
+	inputFirst.setAttribute("value","inputFirstValue");
+	
+	inputSecond.setAttribute("type","hidden");
+	inputSecond.setAttribute("name","inputSecond");
+	inputSecond.setAttribute("value","inputSecondValue");
+	form.appendChild(inputFirst);
+	form.appendChild(inputSecond);
+	document.body.appendChild(form);
+	form.submit();
+}
 </script>
 <body>
 <div class="jb-responsive-table">
@@ -86,7 +104,8 @@ function fn_downloadtest(){
 					<td><input type="button" value="Save" onclick="fn_save()"/></td>
 					<td><input type="button" value="Download test" onclick="fn_downloadtest()"/></td>
 					<td><input type="button" value="Ajax test" onclick="fn_ajax()"/></td>
-					<td><input type="button" value="Xml Marshalling Test" onclick="fn_XmlMarshalling()"/></td>
+					<td><input type="button" value="Xml Marshalling Test" onclick="fn_xmlMarshalling()"/></td>
+					<td><input type="button" value="redirectAttribute Test" onclick="fn_redirectAttribute()"/></td>
 				</tr>
 	        </div>
         </table>

@@ -1,6 +1,8 @@
 package testGitHub.io.Controller;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -67,4 +69,25 @@ public class UrlController {
 		String asOriUrl = getUrlName.getOriginUrl(keys);
 		return "redirect:http://"+asOriUrl;
 	}
+	
+	@RequestMapping("/exSubUrl/callRedirectTest.do")
+	public String callRedirectTest(HttpServletRequest req, RedirectAttributes rd) throws Exception{
+		rd.addAttribute("test1", "values1");
+		rd.addAttribute("test2", "values2");
+		String as[] = {"test1","test2","test3"};
+		List list = Arrays.asList(as);
+		System.out.println(list.size());
+		rd.addAttribute("test3List", list);
+		return "redirect:/exSubUrl/takeRedirectTest.do";
+	}
+	
+	@RequestMapping("/exSubUrl/takeRedirectTest.do")
+	public String takeRedirectTest(HttpServletRequest req, @RequestParam List test3List) throws Exception{
+		System.out.println("test1's value : "+req.getParameter("test1"));
+		System.out.println("test2's value : "+req.getParameter("test2"));
+		System.out.println("test3's size : "+test3List.size());
+		return "";
+	}
+	
+	
 }

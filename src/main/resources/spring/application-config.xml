@@ -8,24 +8,25 @@
     
     <context:component-scan base-package="testGitHub.io.Service"/>
     
-    <bean id="aopBefore" class="testGitHub.io.Aop.SampleBeforeAop"></bean>
+    <!-- First AOP pattern -->
+    <!-- <bean id="aopBefore" class="testGitHub.io.Aop.SampleBeforeAop"></bean>
 	<bean id="aopAfter" class="testGitHub.io.Aop.SampleAfterAop"></bean>
 	<aop:config>
 		<aop:pointcut expression="execution(* testGitHub.io.Service.*.*(..))" id="callPointCut" />
 		<aop:advisor advice-ref="aopBefore" pointcut-ref="callPointCut"/>
 		<aop:advisor advice-ref="aopAfter" pointcut-ref="callPointCut"/>
-	</aop:config>
+	</aop:config> -->     
     
-    
-    <!-- <bean id="aop1" class="testGitHub.io.Aop.SampleAop"></bean>
+    <!-- Second AOP pattern -->
+    <bean id="aop1" class="testGitHub.io.Aop.AnotherAop"></bean>
 	<aop:config>
 		<aop:pointcut expression="execution(* testGitHub.io.Service.*.*(..))" id="callPointCut" />
 		<aop:aspect ref="aop1">
-			<aop:before pointcut-ref="callPointCut" method="CheckLog_before"/>
-			<aop:after  pointcut-ref="callPointCut" method="CheckLog_"/>
-			<aop:after-returning pointcut-ref="callPointCut" method="CheckLog"/>
-			<aop:after-throwing pointcut-ref="callPointCut" method="CheckLog"/>
+			<aop:before pointcut-ref="callPointCut" method="fn_before"/>
+			<aop:after  pointcut-ref="callPointCut" method="fn_after"/>
+			<!-- <aop:after-returning pointcut-ref="callPointCut" method="CheckLog"/>
+			<aop:after-throwing pointcut-ref="callPointCut" method="CheckLog"/> -->
 		</aop:aspect>
-	</aop:config> -->
+	</aop:config>
     
 </beans>

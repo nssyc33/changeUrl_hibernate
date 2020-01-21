@@ -9,20 +9,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import testGitHub.io.AnotherService.AnotherService;
 import testGitHub.io.Entity.SessionVo;
 import testGitHub.io.Service.GetUrlName;
 import testGitHub.io.Service.MakeShortUrlName;
 
-//@Controller
-@MakeAnnoController
-@SessionAttributes("sessionVo")
+@Controller
+//@MakeAnnoController
+//@SessionAttributes("sessionVo")
 public class UrlController {
 
 	@Autowired
@@ -34,11 +35,15 @@ public class UrlController {
 	@Autowired
     ServletContext context;
 	
+	@Autowired
+	AnotherService anotherService;
+	
 	@RequestMapping("/exSubUrl/view.do")
 	public ModelAndView view(HttpSession session,
 							 String testString//--> 들어 오든지 말든지 에러가 안나게 된다.
 			) throws Exception{	
 		System.out.println("확인합니다. : "+ testString);
+		
 		SessionVo sessionVo = new SessionVo();
 		sessionVo.setAge(39);
 		sessionVo.setJob("Web Programmer");
@@ -48,6 +53,7 @@ public class UrlController {
 		ModelAndView md = new ModelAndView();
 		md.addObject("sessionVo", sessionVo);
 		md.addObject("list", getUrlName.getUrlData());
+		md.addObject("changeString", anotherService.changeString("test"));
 		md.setViewName("insertlist");
 		return md;
 	}

@@ -97,6 +97,7 @@ function fn_redirectAttribute(){
 <div class="jb-responsive-table">
     <form action="/exSubUrl/insertData.do" method="post" name="insertForm">
         <input type="hidden" id="dupYn" name="dupYn" value='${dupYn}'/>
+        <input type="text" id="changeString" name="changeString" value='${changeString}'/>
 		<table>
 			<div style="width:50%;">
 				<tr>

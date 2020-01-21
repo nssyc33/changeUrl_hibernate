@@ -7,6 +7,10 @@
 	                       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
     
     <context:component-scan base-package="testGitHub.io.Service"/>
+    <bean id="BeanTheOtherService" class="testGitHub.io.AnotherService.TheOtherService"></bean>
+    <bean id="BeanAnotherService" class="testGitHub.io.AnotherService.AnotherService">
+    	<property name="theOtherService" ref="BeanTheOtherService"></property>
+    </bean>
     
     <!-- First AOP pattern -->
     <!-- <bean id="aopBefore" class="testGitHub.io.Aop.SampleBeforeAop"></bean>

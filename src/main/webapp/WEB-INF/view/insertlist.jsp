@@ -21,20 +21,27 @@ function fn_save(){
     form.submit();
 }
 function fn_ajax(){
+	
+	var asData= {
+		sendDataFirst:"sendValue1",
+		sendDataSecond:"sendValue2",
+		sendDataThird:"sendValue3",
+		sendDataFourth:"sendValue4",
+		sendDataFifth:"sendValue5"
+	};
+	var perData = JSON.stringify(asData);
 	$.ajax({
 		url:"/exSubUrl/getData",
-		type:"GET", 
- 		contentType:"application/json;charset=utf-8",
-		dataType:"json",
-		data:{
-			sendData:"sendValue"
-		},
+		type:"post", 
+ 		contentType:"application/json",
+		dataType: "json",
+		data: JSON.stringify(asData),
 		error:function(xhr,status, msg){
-			alert(xhr+" : "+status+" : "+msg);
+			alert("에러");
 		},	
-		success:function(data){
-			console.log(data);
-			alert(data.result);
+		success:function(result){
+			console.log(result);
+			alert(result.result);
 		}
 	});
 }

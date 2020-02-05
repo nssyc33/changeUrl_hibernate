@@ -20,6 +20,7 @@ import testGitHub.io.AnotherService.AnotherService;
 import testGitHub.io.Entity.SessionVo;
 import testGitHub.io.Service.GetUrlName;
 import testGitHub.io.Service.MakeShortUrlName;
+import testGitHub.io.Service.StaticVariableService;
 
 @MakeAnnoController
 @SessionAttributes("sessionVo")
@@ -37,6 +38,9 @@ public class UrlController {
 	@Autowired
 	AnotherService anotherService;
 	
+	@Autowired
+	StaticVariableService staticVariableService;
+	
 	@RequestMapping("/exSubUrl/view.do")
 	public ModelAndView view(HttpSession session,
 							 String testString//--> 들어 오든지 말든지 에러가 안나게 된다.
@@ -46,7 +50,7 @@ public class UrlController {
 		SessionVo sessionVo = new SessionVo();
 		sessionVo.setAge(39);
 		sessionVo.setJob("Web Programmer");
-		sessionVo.setMarriedYn(false);
+		sessionVo.setMarriedYn(true);
 		sessionVo.setName("Seol YoungCheol");
 		sessionVo.setSex("Male");
 		ModelAndView md = new ModelAndView();
@@ -54,6 +58,8 @@ public class UrlController {
 		md.addObject("list", getUrlName.getUrlData());
 		md.addObject("changeString", anotherService.changeString("test"));
 		md.setViewName("insertlist");
+		staticVariableService.StaticTest();
+		staticVariableService.StaticPlusTime(System.currentTimeMillis());
 		return md;
 	}
 	
@@ -94,5 +100,13 @@ public class UrlController {
 		return "";
 	}
 	
+	private String NVLS(Object ob){
+		if(ob == null){
+			return "";
+		}else{
+			return ob.toString();
+		}
+		
+	}
 	
 }

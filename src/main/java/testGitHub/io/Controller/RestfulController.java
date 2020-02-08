@@ -1,6 +1,5 @@
 package testGitHub.io.Controller;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import testGitHub.io.Entity.TestVo;
 import testGitHub.io.Entity.TestVoXML;
+import testGitHub.io.Interface.PlayService;
 import testGitHub.io.Service.CsvParsingService;
 import testGitHub.io.Service.XmlService;
 
@@ -53,5 +53,20 @@ public class RestfulController {
 		List<TestVo> list = xmlService.getDataList();
 		TestVoXML tx = new TestVoXML("success", list);
 		return tx;
+	}
+	
+	@RequestMapping(value="/exSubUrl/lambdaTest")
+	@ResponseBody
+	public Map lambdaTest(@RequestBody Map asMap) throws Exception{
+		
+//		System.out.println("데이터 HashMap확인 : "+ asMap.toString());
+		Map result = new HashMap();
+		System.out.println("값 확인합니다. sendDataFirst : "+asMap.get("sendDataFirst"));
+		System.out.println("값 확인합니다. sendDataSecond : "+asMap.get("sendDataSecond"));
+		PlayService p = () -> { return "test";};
+		System.out.println(p.callMessage());
+		
+		result.put("result", "done");
+		return result;	
 	}
 }

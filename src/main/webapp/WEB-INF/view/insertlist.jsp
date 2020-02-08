@@ -45,6 +45,28 @@ function fn_ajax(){
 		}
 	});
 }
+function fn_lambdaTest(){
+	
+	var asData= {
+		sendDataFirst:"10",
+		sendDataSecond:"8"
+	};
+	var perData = JSON.stringify(asData);
+	$.ajax({
+		url:"/exSubUrl/lambdaTest",
+		type:"post", 
+		contentType:"application/json",
+		dataType: "json",
+		data: JSON.stringify(asData),
+		error:function(xhr,status, msg){
+			alert("에러");
+		},	
+		success:function(result){
+			alert(result.result);
+		}
+	});
+}
+
 function test(){
 	alert("done");
 }
@@ -114,6 +136,7 @@ function fn_redirectAttribute(){
 					<td><input type="button" value="Ajax test" onclick="fn_ajax()"/></td>
 					<td><input type="button" value="Xml Marshalling Test" onclick="fn_xmlMarshalling()"/></td>
 					<td><input type="button" value="redirectAttribute Test" onclick="fn_redirectAttribute()"/></td>
+					<td><input type="button" value="Lambda test" onclick="fn_lambdaTest()"/></td>
 				</tr>
 	        </div>
         </table>

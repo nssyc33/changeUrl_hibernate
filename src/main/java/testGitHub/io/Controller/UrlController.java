@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import testGitHub.io.AnotherService.AnotherService;
+import testGitHub.io.AnotherService.NoAnnotationService;
 import testGitHub.io.Entity.SessionVo;
 import testGitHub.io.Service.GetUrlName;
 import testGitHub.io.Service.MakeShortUrlName;
@@ -41,6 +42,9 @@ public class UrlController {
 	@Autowired
 	StaticVariableService staticVariableService;
 	
+	@Autowired
+	NoAnnotationService noAnnotationService;
+	
 	@RequestMapping("/exSubUrl/view.do")
 	public ModelAndView view(HttpSession session,
 							 String testString//--> 들어 오든지 말든지 에러가 안나게 된다.
@@ -60,6 +64,7 @@ public class UrlController {
 		md.setViewName("insertlist");
 		staticVariableService.StaticTest();
 		staticVariableService.StaticPlusTime(System.currentTimeMillis());
+		noAnnotationService.callService();
 		return md;
 	}
 	

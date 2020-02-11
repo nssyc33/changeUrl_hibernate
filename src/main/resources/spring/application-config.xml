@@ -12,6 +12,8 @@
     <bean id="BeanAnotherService" class="testGitHub.io.AnotherService.AnotherService">
     	<property name="theOtherService" ref="BeanTheOtherService"></property>
     </bean>
+    <bean id ="noAnnotationService" class="testGitHub.io.AnotherService.NoAnnotationService"></bean>
+    
     
     <!-- First AOP pattern -->
     <!-- <bean id="aopBefore" class="testGitHub.io.Aop.SampleBeforeAop"></bean>

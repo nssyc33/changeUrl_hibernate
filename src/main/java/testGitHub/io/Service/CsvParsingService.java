@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+
 @Service
 public class CsvParsingService {
 
@@ -78,6 +79,7 @@ public class CsvParsingService {
 	}
 	
 	public void fileTransfer() throws IOException {
+
 		String inPosition = "D://testCSV//TESTcsv.txt";
 		String outPosition = "D://testCSV//TESTcsv_normal.txt";
 		

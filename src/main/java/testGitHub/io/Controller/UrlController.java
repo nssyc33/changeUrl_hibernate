@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import testGitHub.io.AnotherService.AnotherService;
 import testGitHub.io.AnotherService.NoAnnotationService;
+import testGitHub.io.Entity.SessionSubVo;
 import testGitHub.io.Entity.SessionVo;
 import testGitHub.io.Service.GetUrlName;
 import testGitHub.io.Service.MakeShortUrlName;
@@ -50,15 +51,21 @@ public class UrlController {
 							 String testString//--> 들어 오든지 말든지 에러가 안나게 된다.
 			) throws Exception{	
 		System.out.println("확인합니다. : "+ testString);
-		
 		SessionVo sessionVo = new SessionVo();
+		SessionSubVo sessionSubVo = new SessionSubVo();
 		sessionVo.setAge(39);
 		sessionVo.setJob("Web Programmer");
 		sessionVo.setMarriedYn(true);
 		sessionVo.setName("Seol YoungCheol");
 		sessionVo.setSex("Male");
+		sessionSubVo.setTest1("value1");
+		sessionSubVo.setTest2("value2");
+		sessionSubVo.setTest3("value3");
+		session.setAttribute("sessionSubVo", sessionSubVo);
+		
 		ModelAndView md = new ModelAndView();
 		md.addObject("sessionVo", sessionVo);
+		md.addObject("sessionSubVo", sessionSubVo);
 		md.addObject("list", getUrlName.getUrlData());
 		md.addObject("changeString", anotherService.changeString("test"));
 		md.setViewName("insertlist");
@@ -77,6 +84,12 @@ public class UrlController {
 		makeShortUrlName.saveUrl(hm);
 		SessionVo vo = (SessionVo)session.getAttribute("sessionVo");
 		System.out.println(vo.getName());
+		
+		
+		SessionSubVo sessionSubVo = (SessionSubVo)session.getAttribute("sessionSubVo");
+		System.out.println("확인해보시기 바랍니다 : test1 : "+sessionSubVo.getTest1());
+		System.out.println("확인해보시기 바랍니다 : test2 : "+sessionSubVo.getTest2());
+		System.out.println("확인해보시기 바랍니다 : test3 : "+sessionSubVo.getTest3());
 		return "redirect:/exSubUrl/view.do";
 	}	
 	
